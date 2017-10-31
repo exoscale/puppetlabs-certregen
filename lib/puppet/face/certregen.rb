@@ -178,8 +178,8 @@ Puppet::Face.define(:certregen, '0.1.0') do
 
       config = {}
 
-      config.merge!(username: opts[:username]) if opts[:username]
-      config.merge!(ssh_key_file: File.expand_path(opts[:ssh_key_file])) if opts[:ssh_key_file]
+      config.merge!(:username => opts[:username]) if opts[:username]
+      config.merge!(:ssh_key_file => File.expand_path(opts[:ssh_key_file])) if opts[:ssh_key_file]
 
       ca = PuppetX::Certregen::CA.setup
       cacert = ca.host.certificate
@@ -188,7 +188,7 @@ Puppet::Face.define(:certregen, '0.1.0') do
         exit 1
       end
 
-      rv = {succeeded: [], failed: []}
+      rv = {:succeeded => [], :failed => []}
       PuppetX::Certregen::CA.certnames.each do |certname|
         begin
           PuppetX::Certregen::CA.distribute(certname, config)
