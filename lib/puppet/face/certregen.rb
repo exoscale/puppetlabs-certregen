@@ -26,7 +26,8 @@ Puppet::Face.define(:certregen, '0.1.0') do
       [cert, crl]
     end
 
-    when_rendering :console do |(cert, crl)|
+    when_rendering :console do |t|
+      cert, crl = t
       "CA expiration is now #{cert.content.not_after}\n" + \
       "CRL next update is now #{crl.content.next_update}"
     end
